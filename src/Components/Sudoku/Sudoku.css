@@ -1,0 +1,32 @@
+/* src/components/Board.css */
+.board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 2px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  
+  .cell {
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    border: 1px solid black;
+    box-sizing: border-box;
+  }
+  .sudoku-container {
+    padding: 20px;
+  }
+  
+  @media (max-width: 600px) {
+    .cell {
+      padding: 8px 0;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .cell {
+      padding: 6px 0;
+    }
+  }
+  
