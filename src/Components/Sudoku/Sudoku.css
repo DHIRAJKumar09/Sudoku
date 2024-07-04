@@ -1,32 +1,113 @@
-/* src/components/Board.css */
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.sudoku-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .board {
-    display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    gap: 2px;
-    max-width: 360px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 0; 
+  background-color: #333;
+  width: 100%;
+  max-width: 450px;
+  aspect-ratio: 1 / 1;
+  margin-bottom: 1em;
+}
+
+.cell {
+  width: 100%;
+  padding-top: 50%;
+  position: relative;
+  font-size: 1.5em;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #999; 
+  box-sizing: border-box;
+}
+
+.cell::after {
+  content: '';
+  display: block;
+  padding-top: 100%;
+
+}
+
+.cell:focus {
+  border-color: #007bff;
+  color: red;
+
+}
+
+
+.cell:nth-child(3n) {
+  border-right: 2px solid #333;
+}
+
+.cell:nth-child(3n + 1) {
+  border-left: 2px solid #333;
+}
+
+.cell:nth-child(27n + 1), 
+.cell:nth-child(27n + 2), 
+.cell:nth-child(27n + 3), 
+.cell:nth-child(27n + 4), 
+.cell:nth-child(27n + 5), 
+.cell:nth-child(27n + 6), 
+.cell:nth-child(27n + 7), 
+.cell:nth-child(27n + 8), 
+.cell:nth-child(27n + 9) {
+  border-top: 2px solid #333;
+}
+
+.cell:nth-last-child(-n + 9) {
+  border-bottom: 2px solid #333;
+}
+
+p {
+  margin: 0.5em 0;
+  font-size: 1.2em;
+  color: green;
+}
+
+@media (max-width: 768px) {
+  .board {
+    max-width: 300px;
   }
-  
+
   .cell {
-    width: 100%;
-    padding: 10px 0;
-    text-align: center;
-    border: 1px solid black;
-    box-sizing: border-box;
+    font-size: 1.2em;
   }
-  .sudoku-container {
-    padding: 20px;
+
+  p {
+    font-size: 1em;
   }
-  
-  @media (max-width: 600px) {
-    .cell {
-      padding: 8px 0;
-    }
+}
+
+@media (max-width: 480px) {
+  .board {
+    max-width: 200px;
   }
-  
-  @media (max-width: 400px) {
-    .cell {
-      padding: 6px 0;
-    }
+
+  .cell {
+    font-size: 1em;
   }
-  
+
+  p {
+    font-size: 0.8em;
+  }
+}
