@@ -26,18 +26,23 @@ const Sudookuu = () => {
 
     if (val >= 1 && val <= 9) {
       grid[row][col] = val;
+      if (!checkValid(grid, row, col, val)) {
+        alert("Invalid move! This number causes a duplicate in the row, column, or 3x3 grid.");
+      } else {
+        setArr(grid);
+      }
     } else {
       grid[row][col] = 0;
+      setArr(grid);
     }
-    setArr(grid);
   }
 
   function checkRow(grid, row, num) {
-    return grid[row].indexOf(num) === -1;
+    return grid[row].filter(x => x === num).length <= 1;
   }
 
   function checkCol(grid, col, num) {
-    return grid.map(row => row[col]).indexOf(num) === -1;
+    return grid.map(row => row[col]).filter(x => x === num).length <= 1;
   }
 
   function checkBox(grid, row, col, num) {
@@ -49,7 +54,7 @@ const Sudookuu = () => {
         boxArr.push(grid[rowStart + i][colStart + j]);
       }
     }
-    return boxArr.indexOf(num) === -1;
+    return boxArr.filter(x => x === num).length <= 1;
   }
 
   function checkValid(grid, row, col, num) {
@@ -70,7 +75,7 @@ const Sudookuu = () => {
       const [newRow, newCol] = getNext(row, col);
       return solver(grid, newRow, newCol);
     }
-    for (let num = 1; num <= 9; num++) {
+    for (let num = 1;  num <= 9; num++) {
       if (checkValid(grid, row, col, num)) {
         grid[row][col] = num;
         const [newRow, newCol] = getNext(row, col);
@@ -88,40 +93,37 @@ const Sudookuu = () => {
     solver(sudoku);
     setArr(sudoku);
   }
-  function compareSudokus(currentSudoku,solvedSudoku){
-    let res ={
-        isComplete : true,
-        isSolved:true,
 
-    }
-    for(var  i=0;i<9;i++){
-        for(var j=0;j<9;j++){
-            if(currentSudoku[i][j] != solvedSudoku[i][j]){
-                res.solvedSudoku=false;
-
-            }
-            res.isComplete = false;
+  function compareSudokus(currentSudoku, solvedSudoku) {
+    let res = {
+      isComplete: true,
+      isSolved: true,
+    };
+    for (let i = 0; i < 9; i++) {
+      for (let j = 0; j < 9; j++) {
+        if (currentSudoku[i][j] !== solvedSudoku[i][j]) {
+          res.isSolved = false;
         }
+        if (currentSudoku[i][j] === 0) {
+          res.isComplete = false;
+        }
+      }
     }
     return res;
   }
 
   function checkSudoku() {
-    let sudoku =  getDeepCopy(initial);
+    let sudoku = getDeepCopy(initial);
     solver(sudoku);
-    let compare  = compareSudokus(arr,sudoku);
+    let compare = compareSudokus(arr, sudoku);
 
-    if(compare.isComplete){
-        alert("congratulation ! you have solved sudoku")
+    if (compare.isComplete) {
+      alert("Congratulations! You have solved the Sudoku.");
+    } else if (compare.isSolved) {
+      alert("Keep going!");
+    } else {
+      alert("Sudoku can't be solved. Try again.");
     }
-    else if(compare.isSolved){
-        alert("keep Going");
-    }
-    else{
-        alert("sudoku can't be solved.Try Again")
-    }
- 
-
   }
 
   return (
